@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Salty Blonde Bakery — Order Online, Confirmed Instantly</title>
+<style>
+  :root{--ink:#3a2a1a;--caramel:#b5651d;--caramel2:#d99a4e;--cream:#fdf6ec;--paper:#fffdf8;--rose:#8a4b2a;--green:#1d7a3a;--wa:#075e54}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,'Times New Roman',serif;background:linear-gradient(165deg,#241708,#42301c 55%,#2c1d0e);color:var(--ink);min-height:100vh;padding:18px 14px 40px}
+  .wrap{max-width:540px;margin:0 auto}
+  .demo-banner{background:#00000055;color:#f3d9ae;border:1px dashed var(--caramel2);border-radius:10px;padding:8px 12px;font-size:13px;text-align:center;margin-bottom:14px;font-family:Arial,sans-serif}
+  .card{background:var(--cream);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  .hero{padding:30px 22px 10px;text-align:center;background:radial-gradient(ellipse at top,#fffaf0,var(--cream))}
+  .hero .kicker{letter-spacing:3px;font-size:11px;color:var(--caramel);font-family:Arial,sans-serif;font-weight:bold}
+  .hero h1{font-size:42px;line-height:1.05;margin-top:6px;color:var(--ink)}
+  .hero h1 span{font-style:italic;font-weight:normal;color:var(--caramel);font-size:28px;display:block}
+  .hero p.tag{margin-top:10px;font-style:italic;color:#6b4e2e;font-size:16.5px}
+  .stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:16px 14px 4px;font-family:Arial,sans-serif}
+  .stat{background:#fffaf0;border:1px solid #ecd3ac;border-radius:12px;padding:9px 13px;text-align:center;min-width:96px}
+  .stat b{display:block;font-size:16px;color:var(--rose)}
+  .stat span{font-size:11.5px;color:#8a6a35}
+  .services{padding:16px 22px 2px;display:flex;flex-direction:column;gap:10px}
+  .svc{background:var(--paper);border:1px solid #ecd3ac;border-radius:12px;padding:13px 15px;font-family:Arial,sans-serif}
+  .svc b{color:var(--rose);font-size:15.5px}
+  .svc p{font-size:13.5px;color:#6b4e2e;margin-top:3px;line-height:1.5}
+  h2.sec{font-size:21px;color:var(--rose);padding:20px 22px 2px}
+  p.secsub{font-family:Arial,sans-serif;font-size:12.5px;color:#9a7434;padding:0 22px}
+  .sizes{margin:12px 22px 0;background:#fffaf0;border:1px solid #ecd3ac;border-radius:12px;padding:6px 16px;font-family:Arial,sans-serif}
+  .sizes .row{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-bottom:1px dotted #dec493;cursor:pointer}
+  .sizes .row:last-child{border-bottom:none}
+  .sizes .row.sel{background:#fdeed3;font-weight:bold;border-radius:6px;padding-left:6px;padding-right:6px}
+  .sizes .row span:last-child{color:var(--rose);font-weight:bold}
+  form{padding:14px 22px 6px;font-family:Arial,sans-serif}
+  label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px;color:#6b3d16}
+  input,select,textarea{width:100%;padding:12px;border:1.5px solid #dec493;border-radius:10px;font-size:16px;background:#fff;font-family:Arial,sans-serif}
+  .grid2{display:flex;gap:10px}.grid2>div{flex:1}
+  button.cta{width:100%;margin:16px 0 8px;background:linear-gradient(90deg,var(--rose),#b5703c);color:#ffedc9;border:none;padding:15px;border-radius:12px;font-size:17px;font-weight:bold;cursor:pointer;letter-spacing:.5px}
+  .tiny{font-size:12px;color:#9a7434;text-align:center;padding:0 22px 18px;font-family:Arial,sans-serif}
+  .confirm{display:none;margin:0 22px 20px;background:#eaf7ee;border:1.5px solid var(--green);border-radius:12px;padding:16px;font-family:Arial,sans-serif}
+  .confirm h3{color:var(--green);margin-bottom:6px}
+  .confirm .id{font-size:20px;font-weight:bold;letter-spacing:1px}
+  .err{color:#b3261e;font-size:13px;margin-top:8px;display:none}
+  .panel{margin-top:16px;background:#fffdf6;border-radius:18px;padding:18px 20px;box-shadow:0 10px 30px rgba(0,0,0,.3);font-family:Arial,sans-serif}
+  .panel h2{font-family:Georgia,serif;color:var(--rose);font-size:20px}
+  .panel p.sub{font-size:12.5px;color:#777;margin:4px 0 12px}
+  .phone{max-width:330px;margin:0 auto;background:#0b141a;border-radius:22px;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .wa-head{background:var(--wa);color:#fff;border-radius:14px 14px 0 0;padding:9px 12px;font-size:13.5px}
+  .wa-head b{display:block;font-size:14.5px}
+  .wa-body{background:#e5ddd5;border-radius:0 0 14px 14px;padding:12px 9px;min-height:290px;display:flex;flex-direction:column;gap:7px}
+  .msg{max-width:85%;padding:8px 10px;border-radius:9px;font-size:13.5px;line-height:1.45;white-space:pre-line;box-shadow:0 1px 1px rgba(0,0,0,.12)}
+  .msg.bot{background:#fff;align-self:flex-start}
+  .msg.me{background:#dcf8c6;align-self:flex-end}
+  .wa-btns{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;justify-content:center}
+  .wa-btns button{background:#fff;border:1.5px solid #25d366;color:var(--wa);border-radius:99px;padding:8px 13px;font-size:13px;font-weight:bold;cursor:pointer}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:12px}
+  th,td{border-bottom:1px solid #eee;padding:6px 4px;text-align:left}
+  .astats{display:flex;gap:10px;flex-wrap:wrap}
+  .astat{flex:1;min-width:100px;background:#fdf1da;border:1px solid #ecd3ac;border-radius:10px;padding:10px;text-align:center}
+  .astat b{display:block;font-size:19px;color:var(--rose)}
+  .astat span{font-size:11.5px;color:#8a6a35}
+  #chatFab{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;border:2px solid var(--caramel2);background:radial-gradient(circle at 32% 28%,#c97e3f,var(--caramel) 70%);cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.4);z-index:50;display:flex;align-items:center;justify-content:center;padding:0;font-size:26px}
+  #chatFab::after{content:'';position:absolute;top:1px;right:1px;width:13px;height:13px;border-radius:50%;background:#25d366;border:2px solid var(--cream)}
+  #chatPanel{position:fixed;right:18px;bottom:86px;width:min(92vw,350px);background:#fff;border-radius:16px;box-shadow:0 16px 44px rgba(0,0,0,.45);display:none;flex-direction:column;overflow:hidden;z-index:50;font-family:Arial,sans-serif}
+  #chatPanel.open{display:flex}
+  .chat-head{background:linear-gradient(90deg,var(--rose),#b5703c);color:#ffedc9;padding:12px 14px}
+  .chat-head b{font-size:15px}.chat-head span{display:block;font-size:11.5px;opacity:.85}
+  #chatMsgs{padding:12px;display:flex;flex-direction:column;gap:7px;max-height:300px;overflow-y:auto;background:#fdf6e9}
+  .cmsg{max-width:86%;padding:8px 11px;border-radius:12px;font-size:13.5px;line-height:1.45;white-space:pre-line}
+  .cmsg.bot{background:#fff;border:1px solid #ecd3ac;align-self:flex-start}
+  .cmsg.me{background:var(--rose);color:#ffedc9;align-self:flex-end}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 10px;background:#fdf6e9}
+  .chips button{background:#fff;border:1.5px solid var(--caramel2);color:var(--rose);border-radius:99px;padding:6px 11px;font-size:12.5px;cursor:pointer;font-weight:bold}
+  .chat-in{display:flex;border-top:1px solid #eee}
+  .chat-in input{flex:1;border:none;padding:12px;font-size:14.5px;outline:none}
+  .chat-in button{background:var(--rose);color:#ffedc9;border:none;padding:0 17px;font-size:15px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="demo-banner">DEMO built by SA Technologies — sample menu & demo prices, no real payments. One link replaces "send us a pre-order request and wait".</div>
+  <div class="card">
+    <div class="hero">
+      <div class="kicker">THE SALTY BLONDE BAKERY</div>
+      <h1>Salty Blonde <span>Bakery</span></h1>
+      <p class="tag">Small-batch bakes, a little salty, a lot sweet — order online and it's confirmed on the spot.</p>
+      <div class="stats">
+        <div class="stat"><b>Small-batch</b><span>baked to order</span></div>
+        <div class="stat"><b>Instant</b><span>order confirmation</span></div>
+        <div class="stat"><b>Local</b><span>pickup, fresh daily</span></div>
+      </div>
+    </div>
+
+    <div class="services">
+      <div class="svc"><b>✅ A pre-order that's actually an order</b><p>Today a pre-order is just a request — you send it and hope for a reply. Here, the moment you submit, your order is <b>confirmed with an order ID</b>, a pickup slot and a total. No waiting, no "did they see my message?"</p></div>
+      <div class="svc"><b>🎂 Custom cakes without the DM marathon</b><p>Pick a cake, add your date and notes, get a confirmation ID instantly. The bakery sees everything in one dashboard — name, item, date — nothing buried in Instagram requests.</p></div>
+    </div>
+
+    <h2 class="sec">Menu — tap an item to order it</h2>
+    <p class="secsub">Demo prices for illustration. Tap a row to select it in the order form below.</p>
+    <div class="sizes" id="menuList">
+      <div class="row" data-item="Sea Salt Choc Chip Cookies (box of 6)" data-price="18"><span>🍪 Sea Salt Choc Chip Cookies · box of 6</span><span>$18</span></div>
+      <div class="row" data-item="Brown Butter Blondies (box of 4)" data-price="16"><span>✨ Brown Butter Blondies · box of 4</span><span>$16</span></div>
+      <div class="row sel" data-item="Salted Caramel Layer Cake 6in" data-price="48"><span>🎂 Salted Caramel Layer Cake · 6″</span><span>$48</span></div>
+      <div class="row" data-item="Cinnamon Morning Buns (box of 4)" data-price="15"><span>🌀 Cinnamon Morning Buns · box of 4</span><span>$15</span></div>
+      <div class="row" data-item="Rustic Sourdough Loaf" data-price="12"><span>🍞 Rustic Sourdough Loaf</span><span>$12</span></div>
+      <div class="row" data-item="Custom Celebration Cake" data-price="65"><span>🎉 Custom Celebration Cake · from</span><span>$65</span></div>
+    </div>
+
+    <h2 class="sec">Place your order</h2>
+    <p class="secsub">Submit and your order is confirmed instantly — with an order ID you can quote at pickup.</p>
+    <form id="ordForm">
+      <label>Your name</label>
+      <input id="name" placeholder="e.g. Jessica Miller" autocomplete="name">
+      <label>Phone (for order updates)</label>
+      <input id="phone" placeholder="e.g. 619 555 0142" inputmode="tel" autocomplete="tel">
+      <div class="grid2">
+        <div><label>Quantity</label>
+          <select id="qty"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+        <div><label>Pickup time</label>
+          <select id="slot"><option>9:00 AM</option><option>11:00 AM</option><option>1:00 PM</option><option>3:00 PM</option><option>5:00 PM</option></select></div>
+      </div>
+      <label>Pickup date</label>
+      <input id="pdate" type="date">
+      <label>Notes (message on the cake, allergies…)</label>
+      <input id="notes" placeholder="Optional">
+      <div class="err" id="err"></div>
+      <button class="cta" type="submit">Confirm my order →</button>
+    </form>
+    <div class="tiny">In the live version you also pay online here, and both you and the bakery get the confirmation instantly — the request-and-wait step disappears completely.</div>
+
+    <div class="confirm" id="confirm">
+      <h3>✅ Order CONFIRMED (demo)</h3>
+      <div class="id" id="ordId"></div>
+      <p id="confirmText" style="margin-top:6px;font-size:14px"></p>
+      <p style="font-size:13px;margin-top:6px">That's the difference: not a request sitting in an inbox — a confirmed order with an ID, a slot and a total. Show this ID at pickup.</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Order on WhatsApp — try it</h2>
+    <p class="sub">In the live version this bot sits on the bakery's WhatsApp. Customers check the menu, ask about custom cakes and get pointed to confirmed ordering. Tap the buttons:</p>
+    <div class="phone">
+      <div class="wa-head"><b>The Salty Blonde Bakery</b>business account · online</div>
+      <div class="wa-body" id="waBody"></div>
+    </div>
+    <div class="wa-btns" id="waBtns">
+      <button data-wa="hi">👋 Say Hi</button>
+      <button data-wa="menu">🍪 See the menu</button>
+      <button data-wa="order">✅ How do I order?</button>
+      <button data-wa="cake">🎂 Custom cake</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Bakery view — what the bakery sees</h2>
+    <p class="sub">Every confirmed order in one list — item, quantity, pickup slot — instead of pre-order requests scattered across Instagram and email.</p>
+    <div class="astats">
+      <div class="astat"><b id="stCount">0</b><span>confirmed orders</span></div>
+      <div class="astat"><b id="stCakes">0</b><span>cake orders</span></div>
+      <div class="astat"><b id="stTotal">$0</b><span>order value</span></div>
+    </div>
+    <table><thead><tr><th>Order</th><th>Name</th><th>Item</th><th>Pickup</th></tr></thead><tbody id="rows"></tbody></table>
+  </div>
+</div>
+
+<script>
+const MENU = {
+  'Sea Salt Choc Chip Cookies (box of 6)': 18,
+  'Brown Butter Blondies (box of 4)': 16,
+  'Salted Caramel Layer Cake 6in': 48,
+  'Cinnamon Morning Buns (box of 4)': 15,
+  'Rustic Sourdough Loaf': 12,
+  'Custom Celebration Cake': 65
+};
+const SEED = [
+  {id:'SB-3101', name:'Demo Customer 1', item:'Sea Salt Choc Chip Cookies (box of 6)', qty:2, date:'2026-10-25', slot:'11:00 AM'},
+  {id:'SB-3102', name:'Demo Customer 2', item:'Salted Caramel Layer Cake 6in', qty:1, date:'2026-10-26', slot:'3:00 PM'},
+  {id:'SB-3103', name:'Demo Customer 3', item:'Rustic Sourdough Loaf', qty:3, date:'2026-10-25', slot:'9:00 AM'}
+];
+let orders = JSON.parse(localStorage.getItem('sb_ord') || 'null') || SEED.slice();
+let selItem = 'Salted Caramel Layer Cake 6in';
+document.getElementById('menuList').addEventListener('click', e => {
+  const row = e.target.closest('.row');
+  if(!row) return;
+  document.querySelectorAll('#menuList .row').forEach(r => r.classList.remove('sel'));
+  row.classList.add('sel'); selItem = row.getAttribute('data-item');
+});
+function render(){
+  document.getElementById('stCount').textContent = orders.length;
+  document.getElementById('stCakes').textContent = orders.filter(x => x.item.toLowerCase().includes('cake')).length;
+  document.getElementById('stTotal').textContent = '$' + orders.reduce((s,x) => s + (MENU[x.item] || 0) * x.qty, 0);
+  document.getElementById('rows').innerHTML = orders.map(x =>
+    '<tr><td>' + x.id + '</td><td>' + x.name + '</td><td>' + x.item + ' ×' + x.qty + '</td><td>' + (x.date || '—') + ' · ' + x.slot + '</td></tr>').join('');
+  localStorage.setItem('sb_ord', JSON.stringify(orders));
+}
+document.getElementById('ordForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.replace(/\D/g,'');
+  const qty = parseInt(document.getElementById('qty').value, 10);
+  const slot = document.getElementById('slot').value;
+  const date = document.getElementById('pdate').value;
+  const err = document.getElementById('err');
+  if(name.length < 2){ err.textContent = 'Please enter your name.'; err.style.display='block'; return; }
+  if(phone.length < 10){ err.textContent = 'Please enter a valid phone number.'; err.style.display='block'; return; }
+  if(!date){ err.textContent = 'Please choose a pickup date.'; err.style.display='block'; return; }
+  err.style.display = 'none';
+  const id = 'SB-' + Math.floor(1000 + Math.random()*9000);
+  orders.push({id, name, item: selItem, qty, date, slot});
+  render();
+  const c = document.getElementById('confirm');
+  c.style.display = 'block';
+  document.getElementById('ordId').textContent = id;
+  document.getElementById('confirmText').textContent = name + ' · ' + selItem + ' ×' + qty + ' · Total $' + (MENU[selItem] * qty) + ' · Pickup ' + date + ' at ' + slot;
+  c.scrollIntoView({behavior:'smooth'});
+});
+render();
+
+/* ---------- WhatsApp bot simulator ---------- */
+const waBody = document.getElementById('waBody');
+function waAdd(text, who){
+  const d = document.createElement('div');
+  d.className = 'msg ' + who; d.textContent = text;
+  waBody.appendChild(d); waBody.scrollTop = waBody.scrollHeight;
+}
+function waBot(text){ setTimeout(() => waAdd(text, 'bot'), 450); }
+document.getElementById('waBtns').addEventListener('click', e => {
+  const key = e.target.getAttribute('data-wa');
+  if(!key) return;
+  if(key === 'hi'){ waAdd('Hi', 'me'); waBot('Hey there! 🧁 Welcome to The Salty Blonde Bakery.\nI can help with:\n🍪 Today\'s menu & prices\n✅ Placing a confirmed order\n🎂 Custom cake enquiries\nTap a button below!'); }
+  if(key === 'menu'){ waAdd('See the menu', 'me'); waBot('🍪 Today\'s favourites (demo prices):\nSea Salt Choc Chip Cookies $18 · Blondies $16\nSalted Caramel Cake 6″ $48 · Morning Buns $15\nSourdough $12\nOrder on the website and you get a confirmation ID instantly — no waiting on a reply.'); }
+  if(key === 'order'){ waAdd('How do I order?', 'me'); waBot('✅ Easy: pick your item on the order page, choose a pickup date & time, submit — your order is CONFIRMED right away with an order ID.\nNo more "request sent, fingers crossed" 🤞'); }
+  if(key === 'cake'){ waAdd('Custom cake', 'me'); waBot('🎂 We\'d love to! Custom celebration cakes start at $65 (demo price).\nTell me the date and what you have in mind — or use the order form and add it in the notes. You\'ll get a confirmation ID straight away.'); }
+});
+waAdd('Hello! Tap "Say Hi" below to start — just like a customer would.', 'bot');
+</script>
+
+<button id="chatFab" title="Chat with the bakery assistant" aria-label="Chat with the bakery assistant">🧁</button>
+<div id="chatPanel">
+  <div class="chat-head"><div><b>Bakery Assistant</b><span>Website chatbot · replies instantly</span></div></div>
+  <div id="chatMsgs"></div>
+  <div class="chips" id="chatChips">
+    <button>Menu prices?</button>
+    <button>How do I order?</button>
+    <button>Custom cakes?</button>
+    <button>Pickup times?</button>
+    <button>Allergens?</button>
+    <button>Contact</button>
+  </div>
+  <div class="chat-in">
+    <input id="chatText" placeholder="Ask about bakes, orders, pickup…">
+    <button id="chatSend">➤</button>
+  </div>
+</div>
+
+<script>
+/* ---------- Website chatbot ---------- */
+const panel = document.getElementById('chatPanel');
+const msgs = document.getElementById('chatMsgs');
+let chatOpened = false;
+document.getElementById('chatFab').addEventListener('click', () => {
+  panel.classList.toggle('open');
+  if(!chatOpened){
+    chatOpened = true;
+    cBot('Hi! I\'m the Salty Blonde assistant 🧁 Ask me about the menu, how ordering works, custom cakes or pickup — or tap a question below.');
+  }
+});
+function cAdd(text, who){
+  const d = document.createElement('div');
+  d.className = 'cmsg ' + who; d.textContent = text;
+  msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+}
+function cBot(text){ setTimeout(() => cAdd(text, 'bot'), 350); }
+function answer(q){
+  const t = q.toLowerCase();
+  if(t.includes('price') || t.includes('menu') || t.includes('cost'))
+    return '🧁 Menu (demo prices): Sea Salt Choc Chip Cookies $18 · Brown Butter Blondies $16 · Salted Caramel Cake 6″ $48 · Cinnamon Morning Buns $15 · Sourdough $12 · Custom cakes from $65. Tap any item on the page to order it.';
+  if(t.includes('order') || t.includes('how') || t.includes('buy') || t.includes('pre-order') || t.includes('preorder'))
+    return '✅ Pick an item, fill the order form, choose a pickup date & time — and your order is CONFIRMED instantly with an order ID. Not a request: a real confirmed order.';
+  if(t.includes('cake'))
+    return '🎂 Custom celebration cakes start at $65 (demo price). Choose "Custom Celebration Cake" in the order form and tell us the occasion + date in the notes — you\'ll get a confirmation ID right away.';
+  if(t.includes('pickup') || t.includes('time') || t.includes('when') || t.includes('collect'))
+    return '🕘 Pickup slots: 9 AM, 11 AM, 1 PM, 3 PM and 5 PM. Choose yours in the order form — it\'s locked to your order ID, so your bake is ready when you are.';
+  if(t.includes('allerg') || t.includes('gluten') || t.includes('nut') || t.includes('vegan'))
+    return '⚠️ Add any allergy or dietary notes in the "Notes" field of the order form — the bakery sees them on the confirmed order. In the live version, items also carry allergen tags.';
+  if(t.includes('contact') || t.includes('email') || t.includes('phone') || t.includes('instagram'))
+    return '📸 You can always reach the bakery on Instagram @the.saltyblondebakery — but ordering here is faster: instant confirmation, no DM needed.';
+  if(t.includes('hi') || t.includes('hello') || t.includes('hey'))
+    return 'Hey! 🙌 Ask me about the menu, ordering, custom cakes or pickup times.';
+  return 'I can help with the menu & prices, how ordering works, custom cakes, pickup slots and allergens. For anything else, message @the.saltyblondebakery on Instagram — in the live version, the bakery can jump into this chat.';
+}
+function askChat(q){
+  if(!q.trim()) return;
+  cAdd(q, 'me'); cBot(answer(q));
+}
+document.getElementById('chatSend').addEventListener('click', () => {
+  const inp = document.getElementById('chatText');
+  askChat(inp.value); inp.value = '';
+});
+document.getElementById('chatText').addEventListener('keydown', e => {
+  if(e.key === 'Enter'){ const inp = e.target; askChat(inp.value); inp.value = ''; }
+});
+document.getElementById('chatChips').addEventListener('click', e => {
+  if(e.target.tagName === 'BUTTON') askChat(e.target.textContent);
+});
+</script>
+</body>
+</html>
